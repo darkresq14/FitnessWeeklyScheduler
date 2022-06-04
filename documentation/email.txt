@@ -1,0 +1,32 @@
+Salut Razvan,
+
+ 
+
+O sa ma uit cum am un pic de timp peste solutia ta cu array-urile. Oricum, arata foarte ok J
+
+Intre timp, poti trece la next step:  implementarea unei mini web app
+
+ 
+
+Specificatiile sunt scrise pentru candidati dar se pot preta si in planul de dezvoltare.
+
+As vrea sa implementezi si functionalitatile optionale:
+
+Tab component
+Validation
+Total KCalorii : aici specificatiile nu sunt foarte complete, poti sa iti creezi un mapping in functie de tipul de activitate si timpul efectiv al exercitiului (ex 1 ora Karate consuma 100 KCalorii)
+ 
+
+Mai tarziu o sa complicam si mai tare aplicatia cu persistare in localstorage.
+
+Cum spuneam, ar fi de preferat sa implementezi in vanilla javascript dar as dori sa fie “component oriented” – ex o clasa care sa se ocupe cu afisarea de activitati, un model, etc
+
+ 
+
+Daca ai intrebari, ne auzim.
+
+ 
+
+Have fun J
+
+Adi.
