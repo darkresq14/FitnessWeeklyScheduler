@@ -17,6 +17,10 @@ button {
   border: none;
 }
 
+h1 {
+  font-size: 38px;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -35,7 +39,8 @@ body {
   justify-content: center;
   overflow: hidden;
   height: 80vh;
-  width: 80vw;
+  width: 90vw;
+  max-width: 650px;
   margin-top: -50%;
 }
 
