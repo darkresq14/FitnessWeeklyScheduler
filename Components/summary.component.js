@@ -54,14 +54,14 @@ function Summary() {
   summary.innerHTML += `
     <div class="horizontal-line"></div>
     <div class="total-time">
-    Total Time: <span class="bolded">${calcTotalTime(
+    Total Workout Time: <span class="bolded">${calcTotalTime(
       activities,
       fromTimes,
       toTimes
     )}</span>
     </div>
     <div class="total-kc">
-    Total Kilocalories consumed: <span class="bolded">${calcTotalKC(
+    Total Kilocalories Consumed: <span class="bolded">${calcTotalKC(
       activities,
       fromTimes,
       toTimes

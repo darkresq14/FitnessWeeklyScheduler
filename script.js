@@ -1,5 +1,6 @@
 import Activity from "./Components/activity.component.js";
 import Summary from "./Components/summary.component.js";
+
 import {
   clearLocalStorage,
   getFromLocalStorage,
@@ -19,6 +20,7 @@ const SLIDES = [
 let activeSlide = 0;
 
 const content = document.querySelector(".content");
+const error = document.querySelector(".error");
 
 // Initiate Activities
 const { activities, fromTimes, toTimes } = getFromLocalStorage();
@@ -27,9 +29,11 @@ for (let i = 0; i < SLIDES.length - 1; i++) {
   const contentTab = document.createElement("div");
   contentTab.classList.add("content-tab");
   contentTab.id = SLIDES[i];
+
   if (i === 0) {
     contentTab.classList.add("show");
   }
+
   contentTab.appendChild(
     Activity(
       "Morning",
@@ -61,24 +65,24 @@ const nextBtn = document.querySelector(".next");
 const clearBtn = document.querySelector(".cls");
 
 previousBtn.addEventListener("click", () => {
-  if (validateActiveSlide(activeSlide)) {
+  const isValid = validateActiveSlide(activeSlide);
+
+  if (isValid === true) {
     activeSlide--;
     handleSlideChange();
   } else {
-    alert(
-      "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
-    );
+    handleError(isValid);
   }
 });
 
 nextBtn.addEventListener("click", () => {
-  if (validateActiveSlide(activeSlide)) {
+  const isValid = validateActiveSlide(activeSlide);
+
+  if (isValid === true) {
     activeSlide++;
     handleSlideChange();
   } else {
-    alert(
-      "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
-    );
+    handleError(isValid);
   }
 });
 
@@ -86,15 +90,16 @@ clearBtn.addEventListener("click", () => clearLocalStorage());
 
 // Tab Listeners
 const menuItems = document.querySelectorAll("li");
+
 menuItems.forEach((mi, idx) => {
   mi.addEventListener("click", () => {
-    if (validateActiveSlide(activeSlide)) {
+    const isValid = validateActiveSlide(activeSlide);
+
+    if (isValid === true) {
       activeSlide = idx;
       handleSlideChange();
     } else {
-      alert(
-        "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
-      );
+      handleError(isValid);
     }
   });
 });
@@ -135,6 +140,7 @@ function handleTabs() {
 
 function showCurrentSlide() {
   const contentTabs = document.querySelectorAll(".content-tab");
+
   contentTabs.forEach((ct, idx) => {
     if (idx === activeSlide) {
       ct.classList.add("show");
@@ -149,8 +155,15 @@ function showCurrentSlide() {
     summary.classList.add("show");
   } else {
     const summary = document.querySelector("#summary");
+
     if (summary != null) {
       summary.remove();
     }
   }
+}
+
+// Error Handling
+function handleError(err) {
+  error.innerHTML = err;
+  error.style.display = "flex";
 }
