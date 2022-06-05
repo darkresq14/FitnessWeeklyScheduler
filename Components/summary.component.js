@@ -1,3 +1,5 @@
+import { capitalizeString } from "../Utils/generic.js";
+
 // Based on a 60kg woman
 const KCAL_PER_MINUTE = {
   jogging: 6,
@@ -11,7 +13,20 @@ const KCAL_PER_MINUTE = {
 
 const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-function Summary(activities, fromTimes, toTimes) {
+function Summary() {
+  const activities = [];
+  document.querySelectorAll("select").forEach((e) => {
+    activities.push(e.value);
+  });
+  const fromTimes = [];
+  document
+    .querySelectorAll("input[name='from-time']")
+    .forEach((e) => fromTimes.push(e.value));
+  const toTimes = [];
+  document
+    .querySelectorAll("input[name='to-time']")
+    .forEach((e) => toTimes.push(e.value));
+
   const summary = document.createElement("div");
   summary.classList.add("content-tab");
   summary.id = "summary";
@@ -86,12 +101,6 @@ function calcTotalKC(activities, fromTimes, toTimes) {
     }
   }
   return totalKC;
-}
-
-function capitalizeString(str) {
-  const stringArray = str.split("");
-  stringArray[0] = stringArray[0].toUpperCase();
-  return stringArray.join("");
 }
 
 export default Summary;

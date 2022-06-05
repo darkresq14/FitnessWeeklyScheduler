@@ -5,6 +5,7 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "./Utils/persistance.js";
+import validateActiveSlide from "./Utils/validation.js";
 
 const SLIDES = [
   "Monday",
@@ -50,20 +51,7 @@ for (let i = 0; i < SLIDES.length - 1; i++) {
 
 // Calculate Summary
 function createSummary() {
-  const activities = [];
-  document.querySelectorAll("select").forEach((e) => {
-    activities.push(e.value);
-  });
-  const fromTimes = [];
-  document
-    .querySelectorAll("input[name='from-time']")
-    .forEach((e) => fromTimes.push(e.value));
-  const toTimes = [];
-  document
-    .querySelectorAll("input[name='to-time']")
-    .forEach((e) => toTimes.push(e.value));
-
-  const summary = Summary(activities, fromTimes, toTimes);
+  const summary = Summary();
   content.appendChild(summary);
 }
 
@@ -73,21 +61,23 @@ const nextBtn = document.querySelector(".next");
 const clearBtn = document.querySelector(".cls");
 
 previousBtn.addEventListener("click", () => {
-  if (validateActiveSlide()) {
+  if (validateActiveSlide(activeSlide)) {
     activeSlide--;
     handleSlideChange();
   } else {
-    alert("For selected activities the From Time has to be before the To Time");
+    alert(
+      "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
+    );
   }
 });
 
 nextBtn.addEventListener("click", () => {
-  if (validateActiveSlide()) {
+  if (validateActiveSlide(activeSlide)) {
     activeSlide++;
     handleSlideChange();
   } else {
     alert(
-      "For selected activities the From Time has to be before the To Time. Please correct the data in order to proceed."
+      "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
     );
   }
 });
@@ -98,12 +88,12 @@ clearBtn.addEventListener("click", () => clearLocalStorage());
 const menuItems = document.querySelectorAll("li");
 menuItems.forEach((mi, idx) => {
   mi.addEventListener("click", () => {
-    if (validateActiveSlide()) {
+    if (validateActiveSlide(activeSlide)) {
       activeSlide = idx;
       handleSlideChange();
     } else {
       alert(
-        "For selected activities the From Time has to be before the To Time"
+        "If a activity has been selected you must also select a From Time and a to Time. The From Time has to be before the To Time."
       );
     }
   });
@@ -163,39 +153,4 @@ function showCurrentSlide() {
       summary.remove();
     }
   }
-}
-
-// Validation
-function validateActiveSlide() {
-  const dayActivities = [];
-  document.querySelectorAll("select").forEach((e, idx) => {
-    if (idx === activeSlide * 2 || idx === activeSlide * 2 + 1) {
-      dayActivities.push(e.value);
-    }
-  });
-  const dayFromTimes = [];
-  document.querySelectorAll("input[name='from-time']").forEach((e, idx) => {
-    if (idx === activeSlide * 2 || idx === activeSlide * 2 + 1) {
-      dayFromTimes.push(e.value);
-    }
-  });
-  const dayToTimes = [];
-  document.querySelectorAll("input[name='to-time']").forEach((e, idx) => {
-    if (idx === activeSlide * 2 || idx === activeSlide * 2 + 1) {
-      dayToTimes.push(e.value);
-    }
-  });
-
-  for (let idx = 0; idx < dayActivities.length; idx++) {
-    if (dayActivities[idx] != "") {
-      const toDate = new Date(`2022-01-01T${dayToTimes[idx]}`);
-      const fromDate = new Date(`2022-01-01T${dayFromTimes[idx]}`);
-      const minutes = toDate - fromDate;
-      if (minutes < 0) {
-        return false;
-      }
-    }
-  }
-
-  return true;
 }
