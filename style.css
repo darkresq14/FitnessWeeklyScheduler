@@ -114,6 +114,9 @@ main .content .activity-container {
   padding: 20px;
   border: 2px solid rgba(0, 0, 0, 0.2);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 main .content .activity-container .div-form {
