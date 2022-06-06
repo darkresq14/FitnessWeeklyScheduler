@@ -1,4 +1,8 @@
 function validateActiveSlide(activeSlide) {
+  if (activeSlide === 5) {
+    return true;
+  }
+
   const dayActivities = [];
   document.querySelectorAll("select").forEach((e, idx) => {
     if (idx === activeSlide * 2 || idx === activeSlide * 2 + 1) {
